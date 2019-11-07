@@ -1,50 +1,118 @@
-# Ideas APP API
+# NestJS GraphQL Case
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
+## Goal
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+The goal of this repository is to demonstrate the error below
 
-## Description
+```
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [InstanceLoader] TypeOrmCoreModule dependencies initialized +134ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [InstanceLoader] TypeOrmModule dependencies initialized +1ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [InstanceLoader] UserModule dependencies initialized +2ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [RoutesResolver] AppController {/}: +9ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [RouterExplorer] Mapped {/, GET} route +6ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [RoutesResolver] UserController {/}: +1ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [RouterExplorer] Mapped {/api/users, GET} route +2ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [RouterExplorer] Mapped {/api/users/:username, GET} route +2ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [RouterExplorer] Mapped {/auth/whoami, GET} route +1ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [RouterExplorer] Mapped {/auth/login, POST} route +1ms
+[Nest] 7098   - 11/07/2019, 10:49:37 AM   [RouterExplorer] Mapped {/auth/register, POST} route +1ms
+(node:7098) UnhandledPromiseRejectionWarning: Error: Query.users defined in resolvers, but not in schema
+(node:7098) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+(node:7098) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+```
 
-A reddit/twitter style app to keep track of posted App Ideas. This is the companion source code for the YouTube tutorial [Ideas App - NestJS API](https://www.youtube.com/watch?v=NF9Xn4g5MJY&list=PLBeQxJQNprbiJm55q7nTAfhMmzIC8MWxc) series.
+## Explaining the cenario
 
-### User Stories - Project Timeline
+This project was created based on NestJS oficial samples below
 
-- x Authenticate users
-- x Users can CRUD ideas
-- x Users can upvote/downvote ideas
-- x Users can bookmark ideas
-- x Users can comment on ideas
-- x Ideas can be seen in realtime
+[GraphQL-Apollo](https://github.com/nestjs/nest/tree/master/sample/12-graphql-apollo)
+[Type-GraphQL](https://github.com/nestjs/nest/tree/master/sample/23-type-graphql)
 
-### Stack
+### app.module.ts
+```
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-- Database - PostgreSQL
-- REST API - NestJS
-- GraphQL API - NestJS
-- Rest Frontend - Angular with NGRX
-- GraphQL Frontend - React (Native?) with Apollo Client
+import { ApiModule } from './api.module';
+import { RecipesModule } from './recipes/recipes.module';
+import { AppController } from './app.controller';
+import { AppGateway } from './app.gateway';
+import { DateScalar } from 'shared/date.scalar';
+
+@Module({
+  imports: [
+    TypeOrmModule.forRoot(),
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      context: ({ req }) => ({ headers: req.headers }),
+      installSubscriptionHandlers: true,
+      autoSchemaFile: 'schema.gql',
+    }),
+    ApiModule,
+    RecipesModule,
+  ],
+  controllers: [AppController],
+  providers: [DateScalar],
+})
+export class AppModule {}
+```
+
+Using the above code causes the error but when running the isolated approaches as showed at NestJS samples the errors did not happen.
+
+## Cenario 1 - Graphql Apollo
+```
+@Module({
+  imports: [
+    TypeOrmModule.forRoot(),
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      context: ({ req }) => ({ headers: req.headers }),
+      installSubscriptionHandlers: true,
+      // autoSchemaFile: 'schema.gql',
+    }),
+    ApiModule,
+    // RecipesModule,
+  ],
+  controllers: [AppController],
+  providers: [DateScalar],
+})
+```
+## Cenario 2 - Type-graphql
+```
+@Module({
+  imports: [
+    TypeOrmModule.forRoot(),
+    GraphQLModule.forRoot({
+      // typePaths: ['./**/*.graphql'],
+      context: ({ req }) => ({ headers: req.headers }),
+      installSubscriptionHandlers: true,
+      autoSchemaFile: 'schema.gql',
+    }),
+    // ApiModule,
+    RecipesModule,
+  ],
+  controllers: [AppController],
+  providers: [DateScalar],
+})
+```
+
+> Does anyone knows how to solve such problem?
+
+## Running the code using MySQL containerized version ( for development purposes )
+
+> We are defining the root password to "ChangeIt" on the exemple below
+```
+docker run --name mysqldev -e MYSQL_ROOT_PASSWORD=ChangeIt -d -p3306:3306 mysql:5.6
+```
+
+> Testing
+```
+docker exec -it mysqldev bash
+mysql -uroot -p 
+```
