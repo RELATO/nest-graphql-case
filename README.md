@@ -31,6 +31,7 @@ The goal of this repository is to demonstrate the error below
 This project was created based on NestJS oficial samples below
 
 [GraphQL-Apollo](https://github.com/nestjs/nest/tree/master/sample/12-graphql-apollo)
+and
 [Type-GraphQL](https://github.com/nestjs/nest/tree/master/sample/23-type-graphql)
 
 ### app.module.ts
@@ -66,6 +67,10 @@ export class AppModule {}
 Using the above code causes the error but when running the isolated approaches as showed at NestJS samples the errors did not happen.
 
 ## Cenario 1 - Graphql Apollo
+
+Now you need to comment the  
+> // autoSchemaFile: 'schema.gql',
+> // RecipesModule,
 ```
 @Module({
   imports: [
@@ -84,6 +89,9 @@ Using the above code causes the error but when running the isolated approaches a
 })
 ```
 ## Cenario 2 - Type-graphql
+Now you need to comment the  
+> // typePaths: ['./**/*.graphql'],
+> // ApiModule,
 ```
 @Module({
   imports: [
