@@ -70,6 +70,7 @@ Using the above code causes the error but when running the isolated approaches a
 
 Now you need to comment the  
 > // autoSchemaFile: 'schema.gql',
+and
 > // RecipesModule,
 ```
 @Module({
@@ -91,6 +92,7 @@ Now you need to comment the
 ## Cenario 2 - Type-graphql
 Now you need to comment the  
 > // typePaths: ['./**/*.graphql'],
+and
 > // ApiModule,
 ```
 @Module({
