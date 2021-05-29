@@ -44,7 +44,7 @@
     "type-graphql": "0.17.5",
     "typeorm": "^0.2.20",
     "typescript": "3.6.4",
-    "ws": "7.2.0"
+    "ws": "7.4.6"
   },
   "devDependencies": {
     "@nestjs/cli": "6.11.3",
